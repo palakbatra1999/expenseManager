@@ -1,4 +1,4 @@
-import { React , useContext} from 'react';
+import { React, useContext } from 'react';
 import '../App.css';
 import { GlobalContext } from './GlobalContext';
 
@@ -7,8 +7,8 @@ const IncomeandExpenses = () => {
   const { transactions } = useContext(GlobalContext);
 
 
-  
-  const plusamounttxns = transactions.filter(transaction => transaction.type === 'Income' )
+
+  const plusamounttxns = transactions.filter(transaction => transaction.type === 'Income')
   const plusamount = plusamounttxns.map(plusamt => plusamt.amount);
   console.log(plusamount);
   const plustotals = plusamount.reduce((acc, item) => (acc += item), 0).toFixed(2);
@@ -17,11 +17,11 @@ const IncomeandExpenses = () => {
   const minusamount = minusamounttxns.map(plusamt => plusamt.amount);
   console.log(minusamount);
   const minustotals = minusamount.reduce((acc, item) => (acc += item), 0).toFixed(2);
-  const modminustotals= (-1)*minustotals;
+  const modminustotals = (-1) * minustotals;
 
   return (
-  <>
-    <div className='inc-exp-container'>
+    <>
+      <div className='inc-exp-container'>
         <div>
           <h4>Income</h4>
           <p className='money plus'>+₹{plustotals}</p>
@@ -30,8 +30,8 @@ const IncomeandExpenses = () => {
           <h4>Expense</h4>
           <p className='money minus'>-₹{modminustotals}</p>
         </div>
-    </div>
-  </>
+      </div>
+    </>
   )
 }
 

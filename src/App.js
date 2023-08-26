@@ -1,27 +1,29 @@
-import logo from './logo.svg';
-import Header from './components/Header';
-import Balance from './components/Balance';
-import IncomeandExpenses from './components/IncomeandExpenses';
-import TransactionList from './components/TransactionList';
-import AddTransaction from './components/AddTransaction';
-import { GlobalProvider } from './components/GlobalContext';
-
+import React from 'react';
 import './App.css';
+import MainPage from './components/MainPage';
+import Login from './components/Login';
+import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import Register from './components/Register';
+import { GlobalContext } from './components/GlobalContext';
+
+
 
 function App() {
   return (
-  <>
-  <GlobalProvider>
-        <Header />
-        <div className='container'>
-          <Balance />
-          <IncomeandExpenses />
-          <TransactionList />
-          <AddTransaction />
+    <>
 
-        </div>
-  </GlobalProvider>
-  </>
+      <BrowserRouter>
+        <Routes>
+
+          <Route exact path="/" element={<Register />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/expenses" element={<MainPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
+
+        </Routes>
+      </BrowserRouter>
+
+    </>
   );
 }
 
