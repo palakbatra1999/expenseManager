@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import '../../App.css';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { useAuth, AuthProvider } from '../context/auth.js';
 import { useNavigate , useLocation } from 'react-router-dom';
 import Layout from '../Addons/Layout';
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
@@ -45,7 +47,7 @@ const Login = () => {
         })
         console.log(auth);
         localStorage.setItem("auth", JSON.stringify(res.data));
-       toast.success('Login successful');
+        toast.success('Login successful');
      
         console.log(res.data);
       
