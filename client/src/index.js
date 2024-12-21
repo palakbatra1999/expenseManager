@@ -8,17 +8,13 @@ import {Navigate, Route, BrowserRouter} from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+console.log("came here");
 root.render(
-  
-  <BrowserRouter>
-      
-  <React.StrictMode>
-  <AuthProvider>
+ <AuthProvider>
+   <React.StrictMode>
     <App />
-    </AuthProvider>
   </React.StrictMode>
- 
-  </BrowserRouter>
+ </AuthProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 
 
-const Register = async() => {
+const Register = () => {
 
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Register = async() => {
     e.preventDefault();
     console.log("Form submitted");
     try {
-      const res = await axios.post('/api/v1/auth/register', {
+      const res = await axios.post('http://localhost:5000/api/v1/auth/register', {
         name: Name,
         email: Email,
         password: Password,
@@ -89,7 +89,7 @@ const Register = async() => {
      onChange={(e)=> setPhone(e.target.value)} required value={Phone}/>
   </div>
  
-  <button type="submit" className="btn btn-primary">Register</button>
+  <button type="submit" className="btn btn-primary" onClick={handlesubmit}>Register</button>
 </form>
 
 

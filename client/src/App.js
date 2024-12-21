@@ -10,15 +10,15 @@ import { GlobalContext } from "./components/Reducercontext/GlobalContext";
 function App() {
   return (
     <>
-      <BrowserRouter>
+       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/homepage" element={<MainPage />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
-        
-      </BrowserRouter>
+        </BrowserRouter>
+    
     </>
   );
 }

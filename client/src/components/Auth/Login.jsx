@@ -34,7 +34,7 @@ const Login = () => {
 
     
        try{
-      const res= await axios.post('/api/v1/auth/login', {"email": mailadd,"password": passadd});
+      const res= await axios.post('http://localhost:5000/api/v1/auth/login', {"email": mailadd,"password": passadd});
       console.log(res.status);
       if(res && res.status === 200){
 
@@ -82,7 +82,7 @@ const Login = () => {
                 </div>
 
                 <div>
-                    <NavLink className='btn' type="submit">Login</NavLink>
+                    <NavLink className='btn' type="submit" onClick={handlesubmit}>Login</NavLink>
 
                 </div>
 
