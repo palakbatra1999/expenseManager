@@ -87,7 +87,7 @@ export const loginController = async(req,res) =>{
 
         const user = await usrModel.findOne({email});
 
-        if( ! user)
+        if(!user)
         {
           return res.status(404).send({
             succes: false,

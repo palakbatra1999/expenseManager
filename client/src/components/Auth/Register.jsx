@@ -1,104 +1,126 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import Layout from '../Addons/Layout.jsx';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Layout from "../Addons/Layout.jsx";
+import toast from "react-hot-toast";
 
 
+const InputField = ({ type, id, placeholder, value, onChange, required = true }) => (
+  <div className="mb-3">
+    <input
+      type={type}
+      className="form-control custom-input"
+      id={id}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      required={required}
+      aria-label={placeholder}
+    />
+  </div>
+);
 
 const Register = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    address: "",
+    phone: "",
+    answer: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const navigate = useNavigate();
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
 
-   // const toast = Toaster();
-
-  const[Name,setName]=useState("");
-  const[Email,setEmail]=useState("");
-  const[Password,setPassword]=useState("");
-  const[Address,setAddress]=useState("");
-  const[Phone,setPhone]=useState("");
-  const[answer,setAnswer]= useState("");
-
-  const handlesubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+    setIsSubmitting(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/v1/auth/register', {
-        name: Name,
-        email: Email,
-        password: Password,
-        address: Address,
-        phone: Phone,
-        question: answer
-      });
-  
-      console.log("API response:", res);
+      const res = await axios.post("http://localhost:5000/api/v1/auth/register", formData);
       if (res.status === 200 || res.status === 201) {
-        navigate('/login');
-        toast.success('User registered successfully. Please login.');
+        toast.success("User registered successfully. Please login.");
+        navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast.error(res.data.message || "Registration failed.");
       }
-    } catch (e) {
-      console.error("Error during registration:", e);
-      toast.error("Something went wrong!");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    } finally {
+      setIsSubmitting(false);
     }
   };
-  
-
-
 
   return (
-  <>
-   <Layout>
-     <div className='register'>
-
-     <form onSubmit={handlesubmit}>
-  <div className="mb-3">
-   
-    <input type="text" className="form-control" id="Name"  placeholder="Enter your name" 
-      onChange={(e)=> setName(e.target.value)}  required value={Name}
-    />
-   
-  </div>
-  <div className="mb-3">
-  
-    <input type="email" className="form-control" id="Email" placeholder="Enter your email address"
-     onChange={(e)=> setEmail(e.target.value)} required value={Email}/>
-  </div>
-   <div className="mb-3">
-    
-    <input type="password" className="form-control" id="Password" placeholder="Enter your email password"
-     onChange={(e)=> setPassword(e.target.value)} required value={Password}/>
-  </div>
-   <div className="mb-3">
  
-    <input type="text" className="form-control" id="Address" placeholder="Enter your Address" 
-       onChange={(e)=> setAddress(e.target.value)} required  value={Address}
-    />
-  </div>
-   <div className="mb-3">
- 
-    <input type="text" className="form-control" id="Answer" placeholder="What is your pet's name?" 
-       onChange={(e)=> setAnswer(e.target.value)} required  value={answer}
-    />
-  </div>
-   <div className="mb-3">
+    <Layout>
+       <div class="register">
+       <div class="register-container">
+      <div className="register-page">
+        <div className="register-card">
+          <h2 className="text-center mb-4">Register</h2>
+          <form onSubmit={handleSubmit}>
+            <InputField
+              type="text"
+              id="name"
+              placeholder="Enter your name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            <InputField
+              type="email"
+              id="email"
+              placeholder="Enter your email"
+              value={formData.email}
+              onChange={handleChange}
+            />
+            <InputField
+              type="password"
+              id="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+            />
+            <InputField
+              type="text"
+              id="address"
+              placeholder="Enter your address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+            <InputField
+              type="text"
+              id="answer"
+              placeholder="What is your pet's name?"
+              value={formData.answer}
+              onChange={handleChange}
+            />
+            <InputField
+              type="text"
+              id="phone"
+              placeholder="Enter your phone number"
+              value={formData.phone}
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              className="btn custom-btn w-100"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Registering..." : "Register"}
+            </button>
+          </form>
+        </div>
+      </div>
+      </div>
+      </div>
+    </Layout>
    
-    <input type="text" className="form-control" id="Phone" placeholder="Enter your phone number"
-     onChange={(e)=> setPhone(e.target.value)} required value={Phone}/>
-  </div>
- 
-  <button type="submit" className="btn btn-primary" onClick={handlesubmit}>Register</button>
-</form>
+  );
+};
 
-
-     </div>
-
-     </Layout>
-  </>
-
-  )
-}
-
-export default Register
+export default Register;

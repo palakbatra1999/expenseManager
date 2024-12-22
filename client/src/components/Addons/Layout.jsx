@@ -5,20 +5,18 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 const Layout = (props) => {
-
-
   return (
-   <>
- 
-    <Header/>
-    <main style={{minHeight : '80vh'}}>
-   <Toaster />
-    {props.children}
-    </main>
-
-    <Footer />
-   </>
-  )
-}
+    <>
+      <div className="app-container">
+        <Header />
+        <main className="main-content">
+          <Toaster />
+          {props.children}
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
+};
 
 export default Layout;
