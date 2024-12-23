@@ -11,13 +11,16 @@
   --accent-color: #FF7A59; 
   --highlight-color: #5DADE2;
   --light-gray: #FAFAFA;
+  --background-light: #F8F9FA; /* Registration page */
+  --background-muted: #EDEFF1; /* Login page */
+  --form-focus-color: #6C63FF; /* Input focus color */
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Ensure the body takes the full viewport height */
-  background-color: #F8F9FA; /* Soft gray background */
+  background-color: var(--background-muted); /* Soft gray background */
   color: #333;
   line-height: 1.6;
 }
@@ -154,9 +157,6 @@ footer a:hover {
   color: #ffc107; /* Change color on hover */
 }
 
-
-
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .navigation {
@@ -173,3 +173,56 @@ footer a:hover {
     margin-bottom: 1rem;
   }
 }
+
+/* Button Base Styles */
+.custom-btn {
+  background-color: #00C9A7; /* Teal color */
+  color: #fff; /* White text */
+  font-size: 1rem; /* Standard button font size */
+  font-weight: bold; /* Make the text bold */
+  padding: 0.8rem 1.2rem; /* Balanced padding for better click area */
+  border: none; /* No borders */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  width: 100%; /* Full width */
+  display: inline-block; /* Inline block for flexibility */
+  text-align: center; /* Center the text */
+}
+
+/* Hover State */
+.custom-btn:hover {
+  background-color: #009e85; /* Darker teal on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
+}
+
+/* Focus State */
+.custom-btn:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.4); /* Focus ring */
+}
+
+/* Disabled State */
+.custom-btn:disabled {
+  background-color: #b0b0b0; /* Gray background */
+  cursor: not-allowed; /* Disable cursor */
+  box-shadow: none; /* Remove shadow */
+}
+
+/* Loading State (when isSubmitting) */
+.custom-btn:disabled:hover {
+  transform: none; /* No hover effect when disabled */
+}
+
+.custom-btn:disabled:before {
+  content: "⏳ "; /* Add a visual loading indicator */
+}
+
+/* Button Text Styling (optional) */
+.custom-btn span {
+  font-size: 1rem;
+  font-weight: normal;
+}
+

@@ -1,139 +1,106 @@
+import usrModel from "../models/usrModel.js";
+import { comparePassword, hashPassword } from "../helpers/authHelper.js";
+import jwt from "jsonwebtoken";
 
-import usrModel from '../models/usrModel.js';
-import dotenv from "dotenv";
-import {comparePassword, hashPassword} from '../helpers/authHelper.js';
-import jwt from 'jsonwebtoken';
+export const registerController = async (req, res) => {
+  try {
+    const { name, email, password, phone, address } = req.body;
 
+    console.log("req.body:", req.body);
 
-export const registerController = async(req,res) => {
- 
-    try{
-        const {namE,email,password,phone,address} = req.body;
-
-       console.log(req.body);
-
-        if(!namE)
-        {
-           return  res.send("Name is required");
-        }
-         if(!email)
-        {
-           return  res.send("Email is required");
-        }
-         if(!password)
-        {
-           return  res.send("Password is required");
-        }
-         if(!phone)
-        {
-           return  res.send("Phone is required");
-        }
-         if(!address)
-        {
-           return  res.send("Address is required");
-        }
-
-        //check for existing user
-        const existinguser = await usrModel.findOne({email})
-
-        if(existinguser)
-        {
-            return res.status(200).send({
-                success : true,
-                message : "User already exists. Please login"
-            })
-        }
-
-        const hashedPassword = await hashPassword(password);
-        const user= await new usrModel({namE,email,phone,address,password:hashedPassword}).save();
-
-        res.status(201).send({
-            succes:true,
-            message : "User registered successfully",
-            user
-
-        })
-
-
-    }
-    catch(error)
-    {
-        console.log(error);
-        res.status(500).send({
-            success : false,
-            message : 'Error in registration',
-
-        })
+    if (!name || !email || !password || !phone || !address) {
+      return res.status(400).send({
+        success: false,
+        message: "All fields are required.",
+      });
     }
 
+    // Check for existing user
+    const existingUser = await usrModel.findOne({ email });
 
-}
-
-export const loginController = async(req,res) =>{
-
-    dotenv.config();
-
-    try{
-
-        const{email,password} = req.body;
-
-          if(!email || !password)
-        {
-           return res.status(404).send({
-            succes: false,
-            message : 'Invalid username or Password'
-           })
-        }
-
-        const user = await usrModel.findOne({email});
-
-        if(!user)
-        {
-          return res.status(404).send({
-            succes: false,
-            message : 'This user doesnt exist, Please sign up'
-           })
-        }
-
-        const match = await comparePassword(password, user.password);
-        if( ! match)
-        {
-             return res.status(200).send({
-            succes: false,
-            message : 'Invalid Password'
-           })
-        }
-
-        const token =  jwt.sign({_id:user._id},process.env.JWT_SECRET, { expiresIn : "74d" });
-
-
-         res.status(200).send({
-            success : true,
-            message : "login successfully",
-            user : {
-                name : user.namE,
-                email : user.email,
-                phone : user.phone,
-                address : user.address,
-               
-            }
-        ,token})
-        
-        
-
-    }
-    catch(error)
-    {
-        console.log(error);
-        res.status(500).send({
-            success : false,
-            message : 'Error in Log in',
-
-        })
+    if (existingUser) {
+      return res.status(409).send({
+        success: false,
+        message: "User already exists. Please login.",
+      });
     }
 
-}
+    const hashedPassword = await hashPassword(password);
+    const user = await new usrModel({
+      name,
+      email,
+      phone,
+      address,
+      password: hashedPassword,
+    }).save();
 
+    res.status(201).send({
+      success: true,
+      message: "User registered successfully.",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in registration.",
+    });
+  }
+};
 
+export const loginController = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
+    console.log("Logging in:", email, password);
 
+    if (!email || !password) {
+      return res.status(400).send({
+        success: false,
+        message: "Email and Password are required.",
+      });
+    }
+
+    const user = await usrModel.findOne({ email });
+    console.log("user:", user);
+
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "This user does not exist. Please sign up first.",
+      });
+    }
+
+    const match = await comparePassword(password, user.password);
+    if (!match) {
+      return res.status(401).send({
+        success: false,
+        message: "Invalid password.",
+      });
+    }
+
+    const token = jwt.sign(
+      { _id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.status(200).send({
+      success: true,
+      message: "Login successful.",
+      user: {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+      },
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in login.",
+    });
+  }
+};

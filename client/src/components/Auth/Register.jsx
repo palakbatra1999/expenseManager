@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Layout from "../Addons/Layout.jsx";
 import toast from "react-hot-toast";
+import '../../App.css';
 
 
 const InputField = ({ type, id, placeholder, value, onChange, required = true }) => (
@@ -44,6 +45,7 @@ const Register = () => {
       const res = await axios.post("http://localhost:5000/api/v1/auth/register", formData);
       if (res.status === 200 || res.status === 201) {
         toast.success("User registered successfully. Please login.");
+        console.log("User registered successfully. Please login.");
         navigate("/login");
       } else {
         toast.error(res.data.message || "Registration failed.");
@@ -108,7 +110,7 @@ const Register = () => {
             />
             <button
               type="submit"
-              className="btn custom-btn w-100"
+              className="btn custom-btn w-100 custom-btn"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Registering..." : "Register"}
