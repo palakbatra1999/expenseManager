@@ -31,7 +31,7 @@ const Login = () => {
 
         localStorage.setItem("auth", JSON.stringify(res.data));
         toast.success("Login successful");
-        navigate(location.state || "/");
+        navigate(location.state?.from || "/homepage");
       } else {
         toast.error(res.data.message || "Login failed");
       }

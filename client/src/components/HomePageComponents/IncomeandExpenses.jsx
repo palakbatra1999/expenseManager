@@ -28,7 +28,7 @@ const IncomeandExpenses = () => {
         </div>
         <div>
           <h4>Expense</h4>
-          <p className='money minus'>-₹{modminustotals}</p>
+          <p className='money minus'>-₹{minustotals}</p>
         </div>
       </div>
     </>

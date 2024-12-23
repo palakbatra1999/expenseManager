@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Arial', sans-serif;
 }
 
 :root {
@@ -23,6 +23,12 @@ body {
   background-color: var(--background-muted); /* Soft gray background */
   color: #333;
   line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+}
+h3 {
+  text-align: center;
+  color: #333;
+  margin-top: 20px;
 }
 
 .app-container {
@@ -224,5 +230,379 @@ footer a:hover {
 .custom-btn span {
   font-size: 1rem;
   font-weight: normal;
+}
+
+/* Form container */
+form {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+}
+
+/* Form controls */
+.form-control {
+  margin-bottom: 25px;
+}
+
+.form-control label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #495057;
+  font-weight: 500;
+}
+
+.form-control input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.form-control input:focus {
+  border-color: #007bff;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Styling for the checkboxes */
+.form-control div {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.form-control input[type="checkbox"] {
+  margin-right: 10px;
+  transform: scale(1.2);
+}
+
+.form-control span {
+  font-size: 16px;
+  color: #495057;
+}
+
+.form-control input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Submit Button */
+button.btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 123, 255, 0.1);
+}
+
+button.btn:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+}
+
+button.btn:active {
+  background-color: #1e7e34;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+/* Responsive Styling */
+@media (max-width: 600px) {
+  form {
+    width: 90%;
+    padding: 20px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .form-control input {
+    font-size: 14px;
+  }
+
+  button.btn {
+    font-size: 14px;
+  }
+}
+
+
+.input-field {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  font-size: 16px;
+  border: 1px solid #7a7a7a;
+  border-radius: 4px;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: row; /* Arrange items horizontally */
+  justify-content: space-between;
+  align-items: center; /* Align vertically */
+  gap: 5px; /* Space between checkboxes */
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.checkbox-input {
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+  accent-color: #4caf50; /* Use a color to match your theme */
+}
+
+.checkbox-text {
+  font-size: 16px;
+  color: #333;
+}
+
+.checkbox-input:disabled {
+  accent-color: #ccc; /* Grey out disabled checkboxes */
+  cursor: not-allowed;
+}
+
+.checkbox-label:hover .checkbox-text {
+  color: #4caf50; /* Highlight text on hover */
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Transaction List Container */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 2px solid #ddd;
+}
+
+/* Transaction List Items */
+.list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 5px 0;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.list li:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Income (plus) and Expense (minus) Styling */
+.plus {
+  border-left: 5px solid #4caf50; /* Green for income */
+}
+
+.minus {
+  border-left: 5px solid #f44336; /* Red for expense */
+}
+
+/* Transaction Text */
+.list li span {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.list li .datedisplay {
+  font-size: 0.875rem;
+  color: #999;
+  margin-left: auto;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
+/* Delete Button */
+.delete_button {
+  background-color: #f44336;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 50%;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.delete_button:hover {
+  background-color: #d32f2f;
+}
+
+/* History Section */
+h3 span {
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2rem;
+  margin-left: 5px;
+  transition: color 0.2s ease;
+}
+
+h3 span:hover {
+  color: #000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list li span {
+    margin: 5px 0;
+  }
+
+  .delete_button {
+    align-self: flex-end;
+  }
+}
+
+/* Income and Expenses Container */
+.inc-exp-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+}
+
+/* Income and Expense Blocks */
+.inc-exp-container div {
+  text-align: center;
+  flex: 1; /* Equal spacing for income and expense blocks */
+  margin: 0 10px;
+}
+
+/* Titles for Income and Expense */
+.inc-exp-container h4 {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Money Styling */
+.money {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Income Styling */
+.money.plus {
+  color: #4caf50; /* Green for income */
+}
+
+/* Expense Styling */
+.money.minus {
+  color: #f44336; /* Red for expenses */
+}
+
+/* Hover Effect (Optional) */
+.inc-exp-container div:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .inc-exp-container {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .inc-exp-container div {
+    margin: 0;
+  }
+
+  .money {
+    font-size: 1.25rem;
+  }
+
+  .inc-exp-container h4 {
+    font-size: 1rem;
+  }
+}
+
+/* Balance Container */
+.balance-container {
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 400px; /* Center the container with a max width */
+}
+
+/* Balance Label */
+.balance-label {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Current Balance */
+.current-balance {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #4caf50; /* Green for positive balance */
+  transition: color 0.3s ease-in-out;
+}
+
+/* Negative Balance */
+.current-balance.negative {
+  color: #f44336; /* Red for negative balance */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .balance-container {
+    padding: 15px;
+    margin: 15px auto;
+  }
+
+  .balance-label {
+    font-size: 1rem;
+  }
+
+  .current-balance {
+    font-size: 1.5rem;
+  }
 }
 

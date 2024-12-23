@@ -1,6 +1,7 @@
 import usrModel from "../models/usrModel.js";
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 export const registerController = async (req, res) => {
   try {
@@ -25,13 +26,13 @@ export const registerController = async (req, res) => {
       });
     }
 
-    const hashedPassword = await hashPassword(password);
+    // const hashedPassword = await hashPassword(password);
     const user = await new usrModel({
       name,
       email,
       phone,
       address,
-      password: hashedPassword,
+      password,
     }).save();
 
     res.status(201).send({
@@ -70,20 +71,14 @@ export const loginController = async (req, res) => {
         message: "This user does not exist. Please sign up first.",
       });
     }
-
-    const match = await comparePassword(password, user.password);
-    if (!match) {
-      return res.status(401).send({
-        success: false,
-        message: "Invalid password.",
-      });
+    //const match = await bcrypt.compare(password, user.password);
+    if (password !==user.password) {
+      return res.status(400).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      { _id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
 
     res.status(200).send({
       success: true,

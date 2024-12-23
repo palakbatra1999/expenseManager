@@ -1,5 +1,4 @@
 import React, { useState, useContext } from 'react';
-
 import '../../App.css';
 import { GlobalContext } from '../Reducercontext/GlobalContext';
 
@@ -64,23 +63,36 @@ const AddTransaction = () => {
                     <label htmlFor='text'>Text</label>
                     <input type='text' value={text} onChange={AddText} placeholder='Enter text...' />
                 </div>
-                <div className='form-control'>
-                    <label htmlFor='amount'>Amount
-                        <br />
-                    </label>
-                    <input type='number' value={amount} onChange={AddAmount} placeholder='Enter amount...' />
+                <div className="form-control">
+  <label htmlFor="amount">
+    Amount
+    <br />
+  </label>
+  <input
+    type="number"
+    value={amount}
+    onChange={AddAmount}
+    placeholder="Enter amount..."
+    className="input-field"
+  />
 
-                    {
-                        checkList.map((item) => {
-                            return (
-                                <div>
-                                    < input type="checkbox" disabled={isSelected ? isSelected !== item : false} name={item} key={item} onChange={onChange}
-                                        value={item} />  <span>{item}</span>
-                                </div>
-                            )
-                        })
-                    }
-                </div>
+  <div className="checkbox-container">
+    {checkList.map((item) => (
+      <label key={item} className="checkbox-label">
+        <input
+          type="checkbox"
+          disabled={isSelected ? isSelected !== item : false}
+          name={item}
+          onChange={onChange}
+          value={item}
+          className="checkbox-input"
+        />
+        <span className="checkbox-text">{item}</span>
+      </label>
+    ))}
+  </div>
+</div>
+
                 <button className='btn'>Add Transaction</button>
             </form>
         </>

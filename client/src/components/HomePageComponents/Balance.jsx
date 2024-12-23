@@ -33,8 +33,10 @@ const Balance = () => {
 
   return (
     <>
-      <h4>Your Balance</h4>
-      <h1 id="balance"> {flag === false ? '-' : '+'} ₹{baltotals} </h1>
+      <div className="balance-container">
+      <h4 className="balance-label">Your Balance</h4>
+      <h1 className="current-balance">{flag === false ? '-' : '+'} ₹{baltotals}</h1>
+    </div>
     </>
   )
 }
