@@ -7,8 +7,9 @@ import AddTransaction from "./HomePageComponents/AddTransaction";
 import { GlobalProvider } from "./Reducercontext/GlobalContext";
 import "../App.css";
 import Layout from "./Addons/Layout";
-import { useAuth } from "./context/auth";
+import { AuthProvider, useAuth } from "./context/auth";
 import { Navigate } from "react-router-dom";
+import { TransactionProvider } from "./Reducercontext/TransactionContext";
 
 const MainPage = () => {
   const { auth } = useAuth(); // Use auth from context
@@ -21,17 +22,21 @@ const MainPage = () => {
   console.log("auth:", auth);
 
   return (
-    <GlobalProvider>
-      <Layout>
-        {/* <pre>{JSON.stringify(auth, null, 4)}</pre> */}
-        <div className="container">
-          <Balance />
-          <IncomeandExpenses />
-          <TransactionList />
-          <AddTransaction />
-        </div>
-      </Layout>
-    </GlobalProvider>
+    <AuthProvider>
+      <TransactionProvider>
+        <GlobalProvider>
+          <Layout>
+            {/* <pre>{JSON.stringify(auth, null, 4)}</pre> */}
+            <div className="container">
+              <Balance />
+              <IncomeandExpenses />
+              <TransactionList />
+              <AddTransaction />
+            </div>
+          </Layout>
+        </GlobalProvider>
+      </TransactionProvider>
+    </AuthProvider>
   );
 };
 

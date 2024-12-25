@@ -1,102 +1,116 @@
-import React, { useState, useContext } from 'react';
-import '../../App.css';
-import { GlobalContext } from '../Reducercontext/GlobalContext';
-
+import React, { useState } from "react";
+import axios from "axios";
+import "../../App.css";
+import { useAuth } from "../context/auth";
+import { useTransactions } from "../Reducercontext/TransactionContext";
 
 const AddTransaction = () => {
+    const { refreshTransactions } = useTransactions();
 
-    const [text, setText] = useState("");
-    const [amount, setAmount] = useState();
-    const [checkList, setCheckList] = useState(['Income', 'Expense']);
-    const [isSelected, setIsSelected] = useState();
-    const [type, setType] = useState(null);
+  const [text, setText] = useState("");
+  const [amount, setAmount] = useState("");
+  const [type, setType] = useState(null);
+  const { auth } = useAuth();
 
-    const AddText = (event) => {
-        setText(event.target.value);
+  console.log("auth from AddTransaction:", auth);
+
+  const addTransaction = async (userId, transactionData) => {
+    console.log("entered addTransaction..")
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/v1/auth/transaction`,
+        {...transactionData, userId}
+      );
+
+      console.log("response:", response);
+
+      if (response.status === 200 || response.status === 201) {
+        console.log("Transaction added successfully:", response.data);
+        refreshTransactions();
+      } else {
+        console.error("Failed to add transaction");
+      }
+    } catch (error) {
+      console.error("Error adding transaction:", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!text || !amount || !type) {
+      alert("Please fill out all fields and select a transaction type!");
+      return;
     }
 
-    const AddAmount = (event) => {
-        setAmount(event.target.value);
-    }
-
-    const { AddTransaction } = useContext(GlobalContext);
-
-    const onChange = (e) => {
-        if (e.target.checked) {
-            !isSelected && setIsSelected(e.target.name);
-            setType(e.target.value);
-
-        } else {
-            setIsSelected(null);
-        }
+    const transactionData = {
+      text,
+      type,
+      amount: +amount,
+      dateoftransaction: new Date().toDateString().substring(3),
     };
 
-    const submit = (event) => {
-        event.preventDefault();
+    console.log("transactionData:", transactionData);
 
+    await addTransaction(auth.user.userId, transactionData);
 
+    // Reset form
+    setText("");
+    setAmount("");
+    setType(null);
+  };
 
-        const transaction = {
-            id: Math.floor(Math.random() * 10000000),
-            text,
-            type,
-            amount: +amount,
-            dateoftransaction: (new Date().toDateString()).substring(3)
+  return (
+    <>
+      <h3>Add a New Transaction</h3>
 
+      <form onSubmit={handleSubmit}>
+        <div className="form-control">
+          <label htmlFor="text">Text</label>
+          <input
+            type="text"
+            id="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter text..."
+          />
+        </div>
 
-        }
-        // console.log(amount, text);
-        AddTransaction(transaction);
-       
-        //  setIsSelected(null);
-        setAmount(0);
-        setText('');
-    }
+        <div className="form-control">
+          <label htmlFor="amount">Amount</label>
+          <input
+            type="number"
+            id="amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount..."
+          />
+        </div>
 
+        <div className="form-control">
+          <label>Transaction Type</label>
+          <div className="radio-container">
+            {["Income", "Expense"].map((item) => (
+              <label key={item} className="radio-label">
+                <input
+                  type="radio"
+                  name="type"
+                  value={item}
+                  checked={type === item}
+                  onChange={(e) => setType(e.target.value)}
+                  className="radio-input"
+                />
+                <span className="radio-text">{item}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+        <button type="submit" className="btn">
+          Add Transaction
+        </button>
+      </form>
+    </>
+  );
+};
 
-    return (
-        <>
-            <h3>Add a new Transaction</h3>
-
-            <form onSubmit={submit}>
-                <div className='form-control'>
-                    <label htmlFor='text'>Text</label>
-                    <input type='text' value={text} onChange={AddText} placeholder='Enter text...' />
-                </div>
-                <div className="form-control">
-  <label htmlFor="amount">
-    Amount
-    <br />
-  </label>
-  <input
-    type="number"
-    value={amount}
-    onChange={AddAmount}
-    placeholder="Enter amount..."
-    className="input-field"
-  />
-
-  <div className="checkbox-container">
-    {checkList.map((item) => (
-      <label key={item} className="checkbox-label">
-        <input
-          type="checkbox"
-          disabled={isSelected ? isSelected !== item : false}
-          name={item}
-          onChange={onChange}
-          value={item}
-          className="checkbox-input"
-        />
-        <span className="checkbox-text">{item}</span>
-      </label>
-    ))}
-  </div>
-</div>
-
-                <button className='btn'>Add Transaction</button>
-            </form>
-        </>
-    )
-}
-
-export default AddTransaction
+export default AddTransaction;

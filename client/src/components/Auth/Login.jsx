@@ -22,6 +22,8 @@ const Login = () => {
         { email: mailadd, password: passadd }
       );
 
+      console.log("response from login page:", res);
+
       if (res && res.status === 200) {
         setAuth({
           ...auth,
@@ -81,11 +83,13 @@ const Login = () => {
         </div>
       </form>
 
-      <div>
-        <br />
-        <label>Or Register if you are new.</label>
-        <NavLink className="btn" to="/register">Sign up</NavLink>
-      </div>
+      <div className="signup-container">
+  <label className="signup-label">Or Register if you are new.</label>
+  <NavLink className="signup-btn" to="/register">
+    Sign up
+  </NavLink>
+</div>
+
     </Layout>
   );
 };

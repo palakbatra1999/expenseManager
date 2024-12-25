@@ -606,3 +606,77 @@ h3 span:hover {
   }
 }
 
+
+/* Radio Button Container */
+.radio-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+/* Radio Button Label */
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Radio Input */
+.radio-input {
+  accent-color: #4caf50; /* Green for the selected option */
+  cursor: pointer;
+}
+
+/* Radio Text */
+.radio-text {
+  font-size: 1rem;
+  color: #333;
+  text-transform: capitalize;
+}
+
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px; /* Space between label and button */
+  margin-top: 20px; /* Add spacing from content above */
+  padding: 20px;
+  border: 1px solid #ddd; /* Optional border */
+  border-radius: 10px; /* Rounded corners */
+  background: linear-gradient(135deg, #f0f8ff, #d3e0ea); /* Gradient background */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  max-width: 300px;
+  margin: auto;
+}
+
+.signup-label {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+}
+
+.signup-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff; /* Primary color */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none; /* Remove underline */
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.signup-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.signup-btn:active {
+  transform: scale(0.95); /* Slightly shrink on click */
+}
+

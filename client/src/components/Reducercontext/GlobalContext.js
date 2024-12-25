@@ -47,6 +47,7 @@ export const GlobalProvider = ({ children }) => {
             type: "ADD_TRANSACTION",
             payload: txn
         });
+        
     }
 
     function AddUser(user) {

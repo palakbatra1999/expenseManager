@@ -1,13 +1,13 @@
 import usrModel from "../models/usrModel.js";
-import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+import transactionModel from "../models/transactionModel.js";
+import { v4 as uuidv4 } from "uuid";
 
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address } = req.body;
 
-    console.log("req.body:", req.body);
+    console.log("req.body from register:", req.body);
 
     if (!name || !email || !password || !phone || !address) {
       return res.status(400).send({
@@ -18,6 +18,8 @@ export const registerController = async (req, res) => {
 
     // Check for existing user
     const existingUser = await usrModel.findOne({ email });
+
+    console.log("existingUser from registerController:", existingUser);
 
     if (existingUser) {
       return res.status(409).send({
@@ -34,6 +36,8 @@ export const registerController = async (req, res) => {
       address,
       password,
     }).save();
+
+    console.log("user from registerController:", user);
 
     res.status(201).send({
       success: true,
@@ -63,7 +67,7 @@ export const loginController = async (req, res) => {
     }
 
     const user = await usrModel.findOne({ email });
-    console.log("user:", user);
+    console.log("user from loginController:", user);
 
     if (!user) {
       return res.status(404).send({
@@ -88,6 +92,7 @@ export const loginController = async (req, res) => {
         email: user.email,
         phone: user.phone,
         address: user.address,
+        userId: user._id,
       },
       token,
     });
@@ -99,3 +104,148 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+
+
+
+export const addTransaction = async (req, res) => {
+ 
+
+  console.log("req.body from login addTransaction:", req.body);
+  const { userId, text, type, amount } = req.body;
+
+
+  try {
+    // Validate user existence
+    const user = await usrModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Create a new transaction
+    const transaction = new transactionModel({
+      userId,
+      text,
+      type,
+      amount,
+      dateoftransaction: new Date(),
+    });
+
+    // Save the transaction to the database
+    await transaction.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Transaction added successfully",
+      data: transaction,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+export const getUserTransactions = async (req, res) => {
+  const { userId } = req.query;
+
+  console.log("userId from getUserTransactions:", req.query);
+
+  try {
+    // Validate user existence
+    const user = await usrModel.findById(userId);
+
+    console.log("user from getUserTransactions:", user);
+
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    // Fetch transactions for the user
+    const transactions = await transactionModel.find({ userId: String(userId) }).sort({ dateoftransaction: -1 });
+    console.log("transactions from getUserTransactions:", transactions);
+
+    res.status(200).json({
+      success: true,
+      message: "Transactions retrieved successfully",
+      data: transactions,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteTransaction = async (req, res) => {
+  const { transactionId } = req.params;
+
+  try {
+    // Find the transaction by ID
+    const transaction = await transactionModel.findById(transactionId);
+
+    console.log("transaction from deleteTransaction:", transaction);
+
+    if (!transaction) {
+      return res.status(404).json({ success: false, message: "Transaction not found" });
+    }
+
+    // Delete the transaction
+    await transaction.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      message: "Transaction deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+export const updateTransaction = async (req, res) => {
+  const { transactionId } = req.params;
+  const { text, type, amount } = req.body;
+
+  try {
+    // Find the transaction by ID
+    const transaction = await transactionModel.findById(transactionId);
+
+    if (!transaction) {
+      return res.status(404).json({ success: false, message: "Transaction not found" });
+    }
+
+    // Update transaction fields
+    if (text) transaction.text = text;
+    if (type) transaction.type = type;
+    if (amount) transaction.amount = amount;
+
+    await transaction.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Transaction updated successfully",
+      data: transaction,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+
+

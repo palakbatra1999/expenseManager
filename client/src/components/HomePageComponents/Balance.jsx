@@ -1,44 +1,49 @@
-import { React, useContext } from 'react'
-import '../../App.css';
-import { GlobalContext } from '../Reducercontext/GlobalContext';
-// import { GlobalContext } from './GlobalContext';
+import { React, useEffect, useState } from "react";
+import "../../App.css";
+import { useAuth } from "../context/auth";
+import { useTransactions } from "../Reducercontext/TransactionContext";
 
 const Balance = () => {
+  const { auth } = useAuth(); // Fetch authenticated user
+  const { transactions } = useTransactions();
+  const [flag, setFlag] = useState(true);
 
-  const { transactions } = useContext(GlobalContext);
+  let balanceClassName = "current-balance";
+  
+  // Calculate balance
+  const income = transactions
+    .filter((transaction) => transaction.type === "Income")
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const plusamounttxns = transactions.filter(transaction => transaction.type === 'Income')
-  const plusamount = plusamounttxns.map(plusamt => plusamt.amount);
-  console.log(plusamount);
-  const plustotals = plusamount.reduce((acc, item) => (acc += item), 0).toFixed(2);
+  const expenses = transactions
+    .filter((transaction) => transaction.type === "Expense")
+    .reduce((acc, transaction) => acc + transaction.amount, 0);
 
-  const minusamounttxns = transactions.filter(transaction => transaction.type === 'Expense')
-  const minusamount = minusamounttxns.map(plusamt => plusamt.amount);
-  const minustotals = minusamount.reduce((acc, item) => (acc += item), 0).toFixed(2);
+  const balance = income - expenses;
 
+  console.log("auth from Balance:", auth);
+  console.log("balance from Balance:", balance);
 
-  const totals = plustotals - minustotals;
+  // Update flag based on balance
+  useEffect(() => {
+    if (balance < 0) {
+      setFlag(false);
+    } else {
+      setFlag(true);
+    }
+  }, [balance]);
 
-  let flag = true;
-  let baltotals = totals;
-
-  if (totals < 0) {
-    flag = false;
-    baltotals = (-1) * totals;
-  }
-
-
-  console.log(baltotals);
-
+  // Set class name dynamically
+  balanceClassName += flag ? "" : " negative";
 
   return (
     <>
       <div className="balance-container">
-      <h4 className="balance-label">Your Balance</h4>
-      <h1 className="current-balance">{flag === false ? '-' : '+'} ₹{baltotals}</h1>
-    </div>
+        <h4 className="balance-label">Your Balance</h4>
+        <h1 className={balanceClassName}>₹{balance}</h1>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default Balance
+export default Balance;

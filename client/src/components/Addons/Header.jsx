@@ -6,13 +6,12 @@ import '../../App.css'
 const Header = () => {
   const { auth, setAuth } = useAuth();
 
+  console.log("localStorage:", localStorage);
+
   const handleLogout = () => {
-    setAuth({
-      ...auth,
-      user: null,
-      token: "",
-    });
-    localStorage.removeItem("auth.token");
+    localStorage.removeItem("auth");
+    setAuth({ user: null, token: "" }); // Reset the auth state
+   
   };
 
   return (
@@ -24,7 +23,7 @@ const Header = () => {
           </NavLink>
         </div>
         <ul className="nav-items">
-          {!auth.user ? (
+          {auth.user === null ? (
             <>
               <li className="list-item-inline">
                 <NavLink to="/"    className={({ isActive }) => (isActive ? "link link-active" : "link")}>
@@ -46,13 +45,6 @@ const Header = () => {
                 </NavLink>
               </li>
 
-              {/* Category Link */}
-              <li className="list-item-inline">
-                <NavLink to="/category"    className={({ isActive }) => (isActive ? "link link-active" : "link")}>
-                  Category
-                </NavLink>
-              </li>
-
               {/* User/Dropdown Menu */}
               <li className="list-item-inline dropdown">
                 <NavLink
@@ -66,22 +58,6 @@ const Header = () => {
                   {auth?.user?.role === 1 ? "Admin" : auth.user.name}
                 </NavLink>
                 <ul className="dropdown-menu">
-                  <li>
-                    <NavLink
-                      to={`/dashboard/${
-                        auth?.user?.role === 1 ? "admin" : "user"
-                      }`}
-                      className="dropdown-item"
-                    >
-                      Dashboard
-                    </NavLink>
-                  </li>
-                  {/* Cart Link */}
-                  <li className="list-item-inline">
-                    <NavLink to="/"    className={({ isActive }) => (isActive ? "link link-active" : "link")}>
-                      Cart(0)
-                    </NavLink>
-                  </li>
                   <li>
                     <NavLink
                       to="/login"
