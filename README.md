@@ -1,6 +1,6 @@
 Expense Manager:
 
-Expense Manager is a full-stack application designed to help users manage their income and expenses effectively. It allows users to easily log transactions, view their balance, and track spending patterns.
+Expense Manager is a full-stack application designed to help users manage their income and expenses effectively. It lets users easily log transactions, view their balance, and track spending patterns.
 
 Features ->
 📝 User Authentication: Secure login and registration.
