@@ -83,12 +83,11 @@ const Login = () => {
         </div>
       </form>
 
-      <div className="signup-container">
-  <label className="signup-label">Or Register if you are new.</label>
-  <NavLink className="signup-btn" to="/register">
-    Sign up
-  </NavLink>
+      <div className="register-section">
+  <p className="register-label">Or Register if you are new.</p>
+  <NavLink className="register-button" to="/register">Sign up</NavLink>
 </div>
+
 
     </Layout>
   );

@@ -5,10 +5,12 @@ import { v4 as uuidv4 } from "uuid";
 const userSchema = new mongoose.Schema(
   {
     _id: {
-       type: String, 
-       default: uuidv4, // Automatically generate a UUID for each user
-       required: true 
-      },
+      type: String, // Use UUID as `_id`
+    },
+    userId: {
+      type: String,
+      unique: true, // Enforce uniqueness for userId
+    },
     name: {
       type: String,
       required: true,

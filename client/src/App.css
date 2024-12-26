@@ -636,47 +636,29 @@ h3 span:hover {
 }
 
 
-.signup-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px; /* Space between label and button */
-  margin-top: 20px; /* Add spacing from content above */
-  padding: 20px;
-  border: 1px solid #ddd; /* Optional border */
-  border-radius: 10px; /* Rounded corners */
-  background: linear-gradient(135deg, #f0f8ff, #d3e0ea); /* Gradient background */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  max-width: 300px;
-  margin: auto;
-}
-
-.signup-label {
-  font-size: 1rem;
-  color: #555;
+.register-section {
   text-align: center;
+  margin-top: 20px;
 }
 
-.signup-btn {
+.register-label {
+  color: #6b7280; /* Tailwind's Gray-500 */
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.register-button {
   display: inline-block;
   padding: 10px 20px;
-  font-size: 1rem;
+  background-color: #3b82f6; /* Tailwind's Blue-500 */
   color: white;
-  background-color: #007bff; /* Primary color */
-  border: none;
-  border-radius: 5px; /* Rounded corners */
-  text-decoration: none; /* Remove underline */
-  text-align: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.signup-btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-  transform: scale(1.05); /* Slightly enlarge the button */
+.register-button:hover {
+  background-color: #2563eb; /* Tailwind's Blue-600 */
 }
-
-.signup-btn:active {
-  transform: scale(0.95); /* Slightly shrink on click */
-}
-

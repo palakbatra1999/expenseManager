@@ -9,8 +9,12 @@ const Header = () => {
   console.log("localStorage:", localStorage);
 
   const handleLogout = () => {
-    localStorage.removeItem("auth");
     setAuth({ user: null, token: "" }); // Reset the auth state
+    localStorage.removeItem("auth");
+
+
+    // Redirect to login page
+    navigate("/login");
    
   };
 
@@ -60,7 +64,7 @@ const Header = () => {
                 <ul className="dropdown-menu">
                   <li>
                     <NavLink
-                      to="/login"
+                     
                       className="dropdown-item"
                       onClick={handleLogout}
                     >

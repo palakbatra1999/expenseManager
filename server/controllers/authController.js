@@ -28,8 +28,12 @@ export const registerController = async (req, res) => {
       });
     }
 
+    const userId = uuidv4(); // Generate unique userId
+
     // const hashedPassword = await hashPassword(password);
     const user = await new usrModel({
+      _id:  userId,
+      userId: userId,
       name,
       email,
       phone,
@@ -49,6 +53,7 @@ export const registerController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Error in registration.",
+      error: error.message,
     });
   }
 };
