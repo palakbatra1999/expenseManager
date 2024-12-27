@@ -1,24 +1,215 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import '../../App.css'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import "../../App.css";
+import axios from "axios";
 
 const Footer = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // Clear field-specific error
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required.";
+    if (!formData.email.trim()) newErrors.email = "Email is required.";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Invalid email format.";
+    if (!formData.message.trim())
+      newErrors.message = "Message is required.";
+    else if (formData.message.trim().length < 10)
+      newErrors.message = "Message must be at least 10 characters long.";
+    return newErrors;
+  };
+
+  const saveFeedback = async (formData) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/auth/feedback",
+        formData
+      );
+      console.log("Response: ", response);
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = validateForm();
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+
+    console.log("Form Submitted: ", formData);
+    await saveFeedback(formData);
+    setSuccessMessage("Thank you for your message! We'll get back to you shortly.");
+    setFormData({ name: "", email: "", message: "" });
+    setIsOpen(false);
+  };
+
   return (
- <>
-    <footer className='bg-dark text-light p-3'>
+    <footer
+      style={{
+        backgroundColor: "#343a40",
+        color: "#ffffff",
+        padding: "20px",
+        textAlign: "center",
+      }}
+    >
+      <p style={{ margin: 0 }}>All rights reserved &copy; PalakBatra</p>
+      <Link
+        style={{
+          color: "#17a2b8",
+          textDecoration: "none",
+          display: "inline-block",
+          marginTop: "10px",
+          padding: "10px 20px",
+          borderRadius: "5px",
+          border: "1px solid color: #00C9A7",
+          backgroundColor: "#343a40",
+          cursor: "pointer",
+          transition: "all 0.3s ease",
+        }}
+        onMouseOver={(e) =>
+          (e.target.style.backgroundColor = "#17a2b8",
+          e.target.style.color = "#ffffff")
+        }
+        onMouseOut={(e) =>
+          (e.target.style.backgroundColor = "#343a40",
+          e.target.style.color = "#17a2b8")
+        }
+        onClick={() => setIsOpen(true)}
+      >
+        Contact Us
+      </Link>
 
-    <p className='text-center'> All rights reserved &copy; PalakBatra</p>
-    <p className='text-center mt-3'>
-    <Link to="/about" aria-label="Learn more about us">About</Link> |
-<Link to="/contact" aria-label="Get in touch with us">Contact us</Link> |
-<Link to="/policy" aria-label="Read our privacy policies">Privacy policies</Link>
- 
+      {/* Modal */}
+      {isOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              width: "400px",
+              background: "#ffffff",
+              borderRadius: "10px",
+              padding: "20px",
+              boxShadow: "0px 4px 6px rgba(0,0,0,0.1)",
+              position: "relative",
+              textAlign: "center",
+            }}
+          >
+            <h2>Contact Us</h2>
 
-    </p>
+            {/* Contact Form */}
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              {errors.name && <p style={{ color: "red" }}>{errors.name}</p>}
 
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Your Email"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              {errors.email && <p style={{ color: "red" }}>{errors.email}</p>}
+
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Your Message"
+                rows="4"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  marginBottom: "10px",
+                  borderRadius: "5px",
+                  border: "1px solid #ccc",
+                }}
+              ></textarea>
+              {errors.message && <p style={{ color: "red" }}>{errors.message}</p>}
+
+              <button
+                type="submit"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  backgroundColor: "#17a2b8",
+                  color: "#ffffff",
+                  border: "none",
+                  borderRadius: "5px",
+                  cursor: "pointer",
+                }}
+              >
+                Send
+              </button>
+            </form>
+            <button
+              onClick={() => setIsOpen(false)}
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                background: "none",
+                border: "none",
+                fontSize: "20px",
+                cursor: "pointer",
+                color: "#999",
+              }}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </footer>
- </>
-  )
-}
+  );
+};
 
 export default Footer;

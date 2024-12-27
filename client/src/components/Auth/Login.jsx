@@ -13,16 +13,54 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handlesubmit = async (e) => {
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
+  const validateField = (field, value) => {
+    const newErrors = { ...errors };
+
+    // Email validation
+    if (field === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!value.trim()) {
+        newErrors.email = "Email is required.";
+      } else if (!emailRegex.test(value)) {
+        newErrors.email = "Please enter a valid email address.";
+      } else {
+        newErrors.email = "";
+      }
+    }
+
+    // Password validation
+    if (field === "password") {
+      if (!value.trim()) {
+        newErrors.password = "Password is required.";
+      } else if (value.length < 6) {
+        newErrors.password = "Password must be at least 6 characters long.";
+      } else {
+        newErrors.password = "";
+      }
+    }
+
+    setErrors(newErrors);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Perform final validation check
+    if (errors.email || errors.password || !mailadd || !passadd) {
+      toast.error("Please fix validation errors before submitting.");
+      return;
+    }
 
     try {
       const res = await axios.post(
         'http://localhost:5000/api/v1/auth/login',
         { email: mailadd, password: passadd }
       );
-
-      console.log("response from login page:", res);
 
       if (res && res.status === 200) {
         setAuth({
@@ -39,13 +77,10 @@ const Login = () => {
       }
     } catch (error) {
       if (error.response) {
-        console.log("Server responded with error:", error.response.data.message);
         toast.error(error.response.data.message || "Something went wrong!");
       } else if (error.request) {
-        console.log("Network error:", error.request);
         toast.error("Network error. Please try again.");
       } else {
-        console.log("Error:", error.message);
         toast.error("An unexpected error occurred.");
       }
     }
@@ -53,16 +88,20 @@ const Login = () => {
 
   return (
     <Layout>
-      <form onSubmit={handlesubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="form-control">
           <label htmlFor="email">Email Address</label>
           <input
             type="text"
             id="email"
             value={mailadd}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              validateField("email", e.target.value);
+            }}
             placeholder="Enter your email address"
           />
+          {errors.email && <p className="error-message">{errors.email}</p>}
         </div>
 
         <div className="form-control">
@@ -71,9 +110,13 @@ const Login = () => {
             type="password"
             id="password"
             value={passadd}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              validateField("password", e.target.value);
+            }}
             placeholder="*******"
           />
+          {errors.password && <p className="error-message">{errors.password}</p>}
         </div>
 
         <div>
@@ -84,11 +127,9 @@ const Login = () => {
       </form>
 
       <div className="register-section">
-  <p className="register-label">Or Register if you are new.</p>
-  <NavLink className="register-button" to="/register">Sign up</NavLink>
-</div>
-
-
+        <p className="register-label">Or Register if you are new.</p>
+        <NavLink className="register-button" to="/register">Sign up</NavLink>
+      </div>
     </Layout>
   );
 };

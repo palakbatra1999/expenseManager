@@ -1,4 +1,5 @@
 import usrModel from "../models/usrModel.js";
+import Feedback from "../models/feedbackModel.js";
 import jwt from "jsonwebtoken";
 import transactionModel from "../models/transactionModel.js";
 import { v4 as uuidv4 } from "uuid";
@@ -251,6 +252,32 @@ export const updateTransaction = async (req, res) => {
     });
   }
 };
+
+export const addFeedback = async(req,res) =>{
+  console.log("Feedback added successfully");
+
+  const {name, email, message} = req.body;
+  try{
+    const feedback = new Feedback({
+      name,
+      email,
+      message,
+    });
+
+    await feedback.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Feedback added successfully",
+      data: feedback,
+    });
+
+  } catch(error){
+
+    console.log("error in adding feedback:", error);
+
+  }
+}
 
 
 

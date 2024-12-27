@@ -662,3 +662,18 @@ h3 span:hover {
 .register-button:hover {
   background-color: #2563eb; /* Tailwind's Blue-600 */
 }
+
+.error-message {
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.link-style {
+    border: none;
+    background-color: transparent;
+    padding: "10px 20px";
+    cursor: pointer;
+    
+}
+
