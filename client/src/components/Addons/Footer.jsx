@@ -25,8 +25,7 @@ const Footer = () => {
     if (!formData.email.trim()) newErrors.email = "Email is required.";
     else if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Invalid email format.";
-    if (!formData.message.trim())
-      newErrors.message = "Message is required.";
+    if (!formData.message.trim()) newErrors.message = "Message is required.";
     else if (formData.message.trim().length < 10)
       newErrors.message = "Message must be at least 10 characters long.";
     return newErrors;
@@ -55,7 +54,9 @@ const Footer = () => {
 
     console.log("Form Submitted: ", formData);
     await saveFeedback(formData);
-    setSuccessMessage("Thank you for your message! We'll get back to you shortly.");
+    setSuccessMessage(
+      "Thank you for your message! We'll get back to you shortly."
+    );
     setFormData({ name: "", email: "", message: "" });
     setIsOpen(false);
   };
@@ -83,14 +84,14 @@ const Footer = () => {
           cursor: "pointer",
           transition: "all 0.3s ease",
         }}
-        onMouseOver={(e) =>
-          (e.target.style.backgroundColor = "#17a2b8",
-          e.target.style.color = "#ffffff")
-        }
-        onMouseOut={(e) =>
-          (e.target.style.backgroundColor = "#343a40",
-          e.target.style.color = "#17a2b8")
-        }
+        onMouseOver={(e) => (
+          (e.target.style.backgroundColor = "#17a2b8"),
+          (e.target.style.color = "#ffffff")
+        )}
+        onMouseOut={(e) => (
+          (e.target.style.backgroundColor = "#343a40"),
+          (e.target.style.color = "#17a2b8")
+        )}
         onClick={() => setIsOpen(true)}
       >
         Contact Us
@@ -123,10 +124,50 @@ const Footer = () => {
               textAlign: "center",
             }}
           >
-            <h2>Contact Us</h2>
-
             {/* Contact Form */}
             <form onSubmit={handleSubmit}>
+              <h1
+                style={{
+                  fontSize: "24px", 
+                  marginBottom: "20px",
+                  color: "#000000",
+                }}
+              >
+                Feedback
+              </h1>
+              <h3
+                style={{
+                  fontSize: "14px",
+                  color: "#6c757d",
+                  margin: "0 0 20px",
+                }}
+                >
+                Email:{" "}
+                <a
+                  href="mailto:palak99batra@gmail.com"
+                  style={{
+                    color: "#17a2b8",
+                    textDecoration: "none",
+                  }}
+                  onMouseOver={(e) =>
+                    (e.target.style.textDecoration = "underline")
+                  }
+                  onMouseOut={(e) => (e.target.style.textDecoration = "none")}
+                >
+                  palak99batra@gmail.com
+                </a>
+              </h3>
+
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#6c757d",
+                  margin: "0 0 20px",
+                }}
+              >
+                Contact no: 9991029976
+              </p>
+
               <input
                 type="text"
                 name="name"
@@ -173,7 +214,9 @@ const Footer = () => {
                   border: "1px solid #ccc",
                 }}
               ></textarea>
-              {errors.message && <p style={{ color: "red" }}>{errors.message}</p>}
+              {errors.message && (
+                <p style={{ color: "red" }}>{errors.message}</p>
+              )}
 
               <button
                 type="submit"

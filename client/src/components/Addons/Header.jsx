@@ -23,7 +23,7 @@ const Header = () => {
       <nav className="navigation container">
         <div id="nav-name">
           <NavLink className="link" to="/">
-            Expense Manager
+            Ease Expense
           </NavLink>
         </div>
         <ul className="nav-items">
