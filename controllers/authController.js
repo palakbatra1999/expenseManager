@@ -103,7 +103,7 @@ export const loginController = async (req, res) => {
         phone: user.phone,
         userId: user._id,
       },
-      auth_token: token,
+      token,
     });
   } catch (error) {
     console.log(error);
