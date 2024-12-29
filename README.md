@@ -1,27 +1,44 @@
-Expense Manager: 
+# Expense Manager
 
-Expense Manager is a full-stack application designed to help users manage their income and expenses effectively. It lets users easily log transactions, view their balance, and track spending patterns.
+A full-stack web application designed to help users manage their financial transactions efficiently. The Expense Manager provides features such as transaction tracking, categorization, and filtering, wrapped in a responsive and user-friendly interface.
 
- Login Credentials: 
-  Email: admin@example.com, Password: Admin@123
+## 🌟 **Live Demo**
+Experience the application here: [Expense Manager](https://expense-manager-two-azure.vercel.app/)
 
-Features ->
-📝 User Authentication: Secure login and registration.
-📊 Transaction Tracking: Add, view, and delete income or expense transactions.
-💵 Balance Calculation: Real-time balance updates based on transactions.
-📅 Date Filtering: Track transactions with date formatting.
-🎨 Responsive UI: User-friendly design with a beautiful interface.
-🔒 Secure: Passwords are hashed, and tokens are used for authentication.
+---
 
-Technologies Used->
+## 📋 **Features**
 
-Frontend:
-React.js: For building the user interface.
-CSS: For styling the components.
-React Router: For seamless navigation.
+- **Transaction Management**: Add, edit, and delete transactions effortlessly.
+- **Categorization**: Classify transactions into categories like Food, Travel, Shopping, etc., for better financial insights.
+- **Filtering**: Filter transactions based on categories for focused analysis.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Authentication**: Secure user login and registration with session persistence.
 
-Backend:
-Node.js: Backend server.
-Express.js: Framework for handling API routes.
-MongoDB: Database for storing user and transaction data.
-Mongoose: ODM for MongoDB.
+---
+
+## 🔧 **Technologies Used**
+
+- **Frontend**: React.js, HTML5, CSS3, JavaScript
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **Authentication**: JSON Web Tokens (JWT)
+- **Deployment**: Vercel (Frontend), Render (Backend)
+
+---
+
+## 🚀 **Getting Started**
+
+Follow these steps to set up the project locally:
+
+### Prerequisites
+- [Node.js](https://nodejs.org/) installed on your machine
+- [MongoDB](https://www.mongodb.com/) database set up locally or in the cloud (e.g., MongoDB Atlas)
+- [Git](https://git-scm.com/) for version control
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/palakbatra1999/expenseManager.git
+   cd travelbook
+
