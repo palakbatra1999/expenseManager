@@ -2,6 +2,12 @@ import { useState, useContext, useEffect, createContext } from "react";
 
 const AuthContext = createContext();
 
+const isTokenExpired = (token) => {
+  if (!token) return true;
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  return payload.exp * 1000 < Date.now();
+};
+
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
@@ -12,12 +18,12 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const data = localStorage.getItem("auth");
     if (data) {
-      const parseData = JSON.parse(data);
-      setAuth({
-        userId: parseData.user.userId, // Optional if `userId` is needed
-        user: parseData.user,
-        token: parseData.token,
-      });
+      const parsedData = JSON.parse(data);
+      if (!isTokenExpired(parsedData.token)) {
+        setAuth(parsedData);
+      } else {
+        localStorage.removeItem("auth");
+      }
     }
   }, []);
 

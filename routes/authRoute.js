@@ -1,5 +1,5 @@
 import express from 'express';
-import {registerController,loginController,getUserTransactions,deleteTransaction,updateTransaction,addTransaction, addFeedback} from '../controllers/authController.js'
+import {registerController,loginController,getUserTransactions,deleteTransaction,updateTransaction,addTransaction, addFeedback, verifyToken} from '../controllers/authController.js'
 
 const router = express.Router();
 
@@ -16,5 +16,9 @@ router.delete("/delete/:transactionId", deleteTransaction);
 
 // Update a transaction
 router.put("/update/:transactionId", updateTransaction);
+
+//verifyToken
+
+router.post("/verifyToken", verifyToken);
 
 export default router;

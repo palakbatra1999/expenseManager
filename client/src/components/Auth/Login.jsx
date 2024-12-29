@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../../App.css';
 import axios from 'axios';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
@@ -13,10 +13,19 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(()=>{
+
+    if(auth && auth.user && auth.token){
+      navigate('/homepage');
+    }
+  },[]);
+
   const [errors, setErrors] = useState({
     email: "",
     password: "",
   });
+
+ 
 
   const validateField = (field, value) => {
     const newErrors = { ...errors };

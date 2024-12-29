@@ -7,10 +7,12 @@ import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import Register from "./components/Auth/Register";
 import { GlobalContext } from "./components/Reducercontext/GlobalContext";
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from "./components/context/auth";
 
 function App() {
   return (
     <> 
+       <AuthProvider>
        <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<Register />} />
@@ -19,6 +21,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         </BrowserRouter>
+       </AuthProvider>
     
     </>
   );

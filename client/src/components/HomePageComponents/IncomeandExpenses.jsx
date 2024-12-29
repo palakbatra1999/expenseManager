@@ -39,7 +39,7 @@ const IncomeandExpenses = () => {
       <div className="inc-exp-container">
         <div>
           <h4>Income</h4>
-          <p className="money plus">+₹{plustotals}</p>
+          <p className="money plus">₹{plustotals}</p>
         </div>
         <div>
           <h4>Expense</h4>

@@ -282,5 +282,15 @@ export const addFeedback = async(req,res) =>{
   }
 }
 
+export const verifyToken =  async(req, res) => {
+  const { token } = req.body;
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).send("Invalid or expired token");
+    res.status(200).send({ user: decoded });
+  });
+};
+
+
 
 
