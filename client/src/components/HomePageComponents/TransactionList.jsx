@@ -28,7 +28,7 @@ const TransactionList = () => {
     try {
       // Send DELETE request to the backend
       const response = await axios.delete(
-        `http://localhost:5000/api/v1/auth/delete/${transactionId}`
+        `https://expensemanager-uua6.onrender.com/api/v1/auth/delete/${transactionId}`
       );
 
       console.log("response from handleDeleteTransaction:", response);

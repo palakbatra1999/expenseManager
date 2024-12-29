@@ -3,7 +3,7 @@ import axios from "axios";
 export const getTransactions = async (userId) => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/v1/auth/transactions?userId=${userId}`
+      `https://expensemanager-uua6.onrender.com/api/v1/auth/transactions?userId=${userId}`
     );
 
     console.log("response from Transaction helper:", response.data.data);

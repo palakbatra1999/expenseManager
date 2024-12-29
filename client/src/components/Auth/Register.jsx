@@ -74,7 +74,7 @@ const Register = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/v1/auth/register", formData);
+      const res = await axios.post("https://expensemanager-uua6.onrender.com/api/v1/auth/register", formData);
       if (res.status === 200 || res.status === 201) {
         toast.success("User registered successfully. Please login.");
         navigate("/login");

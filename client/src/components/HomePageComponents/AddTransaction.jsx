@@ -18,7 +18,7 @@ const AddTransaction = () => {
     console.log("entered addTransaction..")
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/v1/auth/transaction`,
+        `https://expensemanager-uua6.onrender.com/api/v1/auth/transaction`,
         {...transactionData, userId}
       );
 
