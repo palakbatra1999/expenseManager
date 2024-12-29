@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db.js";
-import authRoutes from './routes/authRoute.js';
+import connectDB from "./server/config/db.js";
+import authRoutes from './server/routes/authRoute.js';
 import cors from 'cors';
 import path from "path"; // Required to serve static files
 
