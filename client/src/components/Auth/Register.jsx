@@ -76,8 +76,8 @@ const Register = () => {
     try {
       const res = await axios.post("https://expensemanager-uua6.onrender.com/api/v1/auth/register", formData);
       if (res.status === 200 || res.status === 201) {
-        toast.success("User registered successfully. Please login.");
         navigate("/login");
+        toast.success("User registered successfully. Please login.");
       } else {
         toast.error(res.data.message || "Registration failed.");
       }

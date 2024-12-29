@@ -81,7 +81,7 @@ const Login = () => {
       } else if (error.request) {
         toast.error("Network error. Please try again.");
       } else {
-        toast.error("An unexpected error occurred.");
+        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
