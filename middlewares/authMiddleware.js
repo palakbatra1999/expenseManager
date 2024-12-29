@@ -1,55 +1,43 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import usrModel from '../models/usrModel.js';
+import usrModel from "../models/usrModel.js";
 
 dotenv.config();
-export const requireSignin = async(req,res,next) => {
-    try{
-
-          if (!req.headers.authorization) {
-            return res.status(401).json({ error: "JWT must be provided" });
-         }
-
-
-        const decode = jwt.verify(
-                       req.headers.authorization,
-                       process.env.JWT_SECRET
-                       )
-
-        req.user = decode;
-        next();
-
-    }catch(error){
-      console.log(error)
+export const requireSignin = async (req, res, next) => {
+  try {
+    if (!req.headers.authorization) {
+      return res.status(401).json({ error: "JWT must be provided" });
     }
 
-}
+    const decode = jwt.verify(
+      req.headers.authorization,
+      process.env.JWT_SECRET
+    );
 
-export const isAdmin = async(req,res,next) =>{
+    req.user = decode;
+    next();
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    try{
-        const user = await usrModel.findById(req.user._id);
-        if(user.role !== 1)
-        {
-            return res.status(401).send({
-                message : 'Unauthorized access',
-                success : false
-            })
-
-        }
-        else {
-            next();
-        }
-
+export const isAdmin = async (req, res, next) => {
+  try {
+    const user = await usrModel.findById(req.user._id);
+    if (user.role !== 1) {
+      return res.status(401).send({
+        message: "Unauthorized access",
+        success: false,
+      });
+    } else {
+      next();
     }
-    catch(error)
-    {
-        console.log(error);
+  } catch (error) {
+    console.log(error);
 
-         return res.status(401).send({
-                message : error,
-                success : false
-            })
-    }
-
-}
+    return res.status(401).send({
+      message: error,
+      success: false,
+    });
+  }
+};
