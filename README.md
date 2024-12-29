@@ -3,7 +3,7 @@
 A full-stack web application designed to help users manage their financial transactions efficiently. The Expense Manager provides features such as transaction tracking, categorization, and filtering, wrapped in a responsive and user-friendly interface.
 
 ## 🌟 **Live Demo**
-Experience the application here: [Expense Manager](https://expense-manager-two-azure.vercel.app/)
+Experience the application here: [Ease expense](https://expense-manager-two-azure.vercel.app/)
 
 ---
 
