@@ -16,8 +16,6 @@ export const requireSignin = async (req, res, next) => {
       process.env.JWT_SECRET
     );
 
-    console.log(decode);
-
     req.user = decode;
     next();
   } catch (error) {
